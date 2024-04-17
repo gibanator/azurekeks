@@ -41,29 +41,11 @@ jobs: # The jobs that run in this workflow
             The issue is now resolved.
 
 # Comment on when an users opens the first pull request
-  comment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check if user is opening first PR
-        id: check_first_pr
-        uses: actions/first-interaction@v1
+      - name: First interaction
+        if: github.event_name == 'pull_request'
+        uses: actions/first-interaction@v1.3.0
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          issue-type: "pull-request"
-          
-      - name: Comment on first PR
-        if: steps.check_first_pr.outputs.first-issue
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issueComment = `
-              Congratulations on opening your first pull request! 🎉
-              Thank you for your contribution!
-            `;
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: issueComment
-            });
+          # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # Comment to post on an individual's first pull request
+          pr-message: 'Congrats!'
