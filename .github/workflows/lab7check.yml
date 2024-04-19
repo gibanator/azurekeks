@@ -56,4 +56,4 @@ jobs: # The jobs that run in this workflow
           # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           # Comment to post on an individual's first pull request
-          pr-message: 'Congrats!'
+          pr-message: 'Congrats on your first PR! thanks for contribution.'
